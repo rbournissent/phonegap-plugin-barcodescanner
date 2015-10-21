@@ -42,7 +42,6 @@ final class BeepManager {
   private final Activity activity;
   private MediaPlayer mediaPlayer;
   private boolean playBeep;
-  private boolean vibrate;
 
   private static FakeR fakeR;
   BeepManager(Activity activity) {
@@ -55,7 +54,6 @@ final class BeepManager {
   void updatePrefs() {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
     playBeep = shouldBeep(prefs, activity);
-    vibrate = prefs.getBoolean(PreferencesActivity.KEY_VIBRATE, false);
     if (playBeep && mediaPlayer == null) {
       // The volume on STREAM_SYSTEM is not adjustable, and users found it too loud,
       // so we now play on the music stream.
@@ -68,10 +66,8 @@ final class BeepManager {
     if (playBeep && mediaPlayer != null) {
       mediaPlayer.start();
     }
-    if (vibrate) {
-      Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-      vibrator.vibrate(VIBRATE_DURATION);
-    }
+    Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+    vibrator.vibrate(VIBRATE_DURATION);
   }
 
   private static boolean shouldBeep(SharedPreferences prefs, Context activity) {
