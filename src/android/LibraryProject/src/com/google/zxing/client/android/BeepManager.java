@@ -65,9 +65,10 @@ final class BeepManager {
   void playBeepSoundAndVibrate() {
     if (playBeep && mediaPlayer != null) {
       mediaPlayer.start();
+    } else {
+      Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+      vibrator.vibrate(VIBRATE_DURATION);
     }
-    Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-    vibrator.vibrate(VIBRATE_DURATION);
   }
 
   private static boolean shouldBeep(SharedPreferences prefs, Context activity) {
