@@ -366,6 +366,7 @@ parentViewController:(UIViewController*)parentViewController
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self barcodeScanDone];
         AudioServicesPlaySystemSound(_soundFileObject);
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         [self.plugin returnSuccess:text format:format cancelled:FALSE flipped:FALSE callback:self.callback];
     });
 }
